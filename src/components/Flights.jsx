@@ -6,9 +6,17 @@ import FilterCard from "./FilterCard";
 import Flight from "./Flight";
 import Navbar from "./shared/Navbar";
 import useGetAllAdminFlights from "@/hooks/useGetAllAdminFlights";
+import Pagination from "./shared/Pagination";
 
 const Flights = () => {
-  useGetAllAdminFlights();
+  // useGetAllAdminFlights();
+  const [page, setPage] = useState(1); // State to track current page
+  const limit = 2; // Number of flights per page
+  const { totalPages, currentPage, setCurrentPage } = useGetAllAdminFlights(
+    page,
+    limit
+  );
+
   const dispatch = useDispatch();
   const { allAdminFlights, searchedQuery } = useSelector(
     (store) => store.flight
@@ -44,6 +52,11 @@ const Flights = () => {
     setFilterFlights(filteredFlight);
   }, [searchedQuery, allAdminFlights]);
 
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+    setCurrentPage(newPage); // Update current page in the hook
+  };
+
   return (
     <div>
       <Navbar />
@@ -69,6 +82,11 @@ const Flights = () => {
                   </motion.div>
                 ))}
               </div>
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
             </div>
           )}
         </div>
