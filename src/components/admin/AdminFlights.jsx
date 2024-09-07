@@ -1,22 +1,22 @@
-import useGetAllAdminJobs from "@/hooks/useGetAllAdminJobs";
-import { setSearchJobByText } from "@/redux/jobSlice";
+import useGetAllAdminFlights from "@/hooks/useGetAllAdminFlights";
+import { setSearchFlightByText } from "@/redux/flightSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import AdminJobsTable from "./AdminJobsTable";
+import AdminFlightsTable from "./AdminFlightsTable";
 
-const AdminJobs = () => {
-  useGetAllAdminJobs();
+const AdminFlights = () => {
+  useGetAllAdminFlights();
   const [input, setInput] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setSearchJobByText(input));
+    dispatch(setSearchFlightByText(input));
   }, [input]);
 
   return (
@@ -26,17 +26,17 @@ const AdminJobs = () => {
         <div className="flex items-center justify-between my-5">
           <Input
             className="w-fit"
-            placeholder="Filter by name, role"
+            placeholder="Filter by airline, flight No."
             onChange={(e) => setInput(e.target.value)}
           />
-          <Button onClick={() => navigate("/admin/jobs/create")}>
-            New Jobs
+          <Button onClick={() => navigate("/admin/flights/create")}>
+            New Flight
           </Button>
         </div>
-        <AdminJobsTable />
+        <AdminFlightsTable />
       </div>
     </div>
   );
 };
 
-export default AdminJobs;
+export default AdminFlights;

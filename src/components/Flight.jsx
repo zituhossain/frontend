@@ -5,12 +5,13 @@ import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
 
 const Flight = ({ flight }) => {
-  const formatdate = new Date(flight?.date).toLocaleDateString();
+  console.log(flight);
   Flight.propTypes = {
     flight: PropTypes.object,
   };
 
   const navigate = useNavigate();
+  const formatdate = new Date(flight?.date).toLocaleDateString();
 
   return (
     <div className="bg-white shadow-xl border border-gray-100 p-5 rounded-md cursor-pointer">

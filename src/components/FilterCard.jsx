@@ -1,74 +1,87 @@
 import { useEffect, useState } from "react";
 import { Label } from "./ui/label";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Checkbox } from "./ui/checkbox"; // Use Checkbox for multiple selections
+import { Slider } from "./ui/slider"; // Use Slider for price range
 import { useDispatch } from "react-redux";
-import { setSearchedQuery } from "@/redux/jobSlice";
+import { setSearchedQuery } from "@/redux/flightSlice";
 
 const filterData = [
   {
-    filterType: "Location",
-    filterValue: ["Bangladesh", "Canada", "India", "USA", "UK", "Germany"],
-  },
-  {
-    filterType: "Industry",
+    filterType: "Airline",
     filterValue: [
-      "Frontend Developer",
-      "Backend Developer",
-      "Data Science",
-      "Graphic Designer",
-      "Full Stack Developer",
-      "Mobile App Developer",
-      "Software Engineer",
-      "Nextjs Developer",
-      "Laravel Developer",
-      "Flutter Developer",
-      "React Developer",
+      "Biman Bangladesh Airlines",
+      "Qatar",
+      "Emirates",
+      "Turkish Airlines",
+      "Singapore Airlines",
+      "Malaysia Airlines",
+      "Saudia",
+      "Thai Airways",
+      "IndiGo",
+      "Flydubai",
     ],
   },
-  // {
-  //   filterType: "Salary",
-  //   filterValue: [
-  //     "20k - 40k",
-  //     "40k - 60k",
-  //     "60k - 80k",
-  //     "80k - 100k",
-  //     "100k - 120k",
-  //   ],
-  // },
 ];
 
 const FilterCard = () => {
   const dispatch = useDispatch();
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedAirlines, setSelectedAirlines] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 500000]);
 
-  const changeHandler = (value) => {
-    setSelectedValue(value);
+  const toggleAirline = (airline) => {
+    setSelectedAirlines(
+      (prev) =>
+        prev.includes(airline)
+          ? prev.filter((item) => item !== airline) // Remove if already selected
+          : [...prev, airline] // Add if not selected
+    );
   };
 
   useEffect(() => {
-    dispatch(setSearchedQuery(selectedValue));
-  }, [dispatch, selectedValue]);
+    // Dispatch both selected airlines and price range to redux
+    dispatch(setSearchedQuery({ selectedAirlines, priceRange }));
+  }, [dispatch, selectedAirlines, priceRange]);
 
   return (
     <div className="w-full bg-white p-3 rounded-md">
-      <h1 className="font-bold text-lg">Filter Jobs</h1>
+      <h1 className="font-bold text-lg">Filter Flights</h1>
       <hr className="mt-3" />
-      <RadioGroup value={selectedValue} onValueChange={changeHandler}>
-        {filterData.map((data, index) => (
-          <div key={index}>
-            <h1 className="font-bold text-lg">{data?.filterType}</h1>
-            {data?.filterValue?.map((value, idx) => {
-              const itemId = `id${index}-${idx}`;
-              return (
-                <div key={index} className="flex items-center space-x-2 my-2">
-                  <RadioGroupItem value={value} id={itemId} />
-                  <Label htmlFor={itemId}>{value}</Label>
-                </div>
-              );
-            })}
-          </div>
-        ))}
-      </RadioGroup>
+
+      {/* Airline Filter */}
+      {filterData.map((data, index) => (
+        <div key={index}>
+          <h1 className="font-bold text-lg">{data?.filterType}</h1>
+          {data?.filterValue?.map((value, idx) => {
+            const itemId = `id${index}-${idx}`;
+            return (
+              <div key={idx} className="flex items-center space-x-2 my-2">
+                <Checkbox
+                  id={itemId}
+                  checked={selectedAirlines.includes(value)}
+                  onCheckedChange={() => toggleAirline(value)}
+                />
+                <Label htmlFor={itemId}>{value}</Label>
+              </div>
+            );
+          })}
+        </div>
+      ))}
+
+      {/* Price Range Filter */}
+      <div className="mt-4">
+        <h1 className="font-bold text-lg mb-5">Price</h1>
+        <Slider
+          value={priceRange}
+          onValueChange={(value) => setPriceRange(value)} // Update price range state
+          min={0}
+          max={500000}
+          step={20}
+        />
+        <div className="flex justify-between mt-2">
+          <span>{priceRange[0]}</span>
+          <span>{priceRange[1]}</span>
+        </div>
+      </div>
     </div>
   );
 };

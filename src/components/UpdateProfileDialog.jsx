@@ -22,39 +22,26 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
   };
-
-  const { user, loading } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
+  const { user, loading, token } = useSelector((store) => store.auth);
+
   const [input, setInput] = useState({
-    fullName: user?.fullName,
+    username: user?.username,
     email: user?.email,
     phoneNumber: user?.phoneNumber,
-    bio: user?.profile?.bio,
-    skills: user?.profile?.skills?.map((skill) => skill),
-    file: user?.profile?.resume,
   });
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const changeFileHandler = (e) => {
-    const file = e.target.files[0];
-    setInput({ ...input, file });
-  };
-
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("fullName", input.fullName);
+    formData.append("username", input.username);
     formData.append("email", input.email);
     formData.append("phoneNumber", input.phoneNumber);
-    formData.append("bio", input.bio);
-    formData.append("skills", input.skills);
-    if (input.file) {
-      formData.append("file", input.file);
-    }
 
     try {
       dispatch(setLoading(true));
@@ -63,7 +50,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           withCredentials: true,
         }
@@ -100,8 +88,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   id="name"
                   type="text"
                   onChange={changeEventHandler}
-                  name="name"
-                  value={input.fullName}
+                  name="username"
+                  value={input.username}
                   className="col-span-3"
                 />
               </div>
@@ -126,47 +114,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   id="phone"
                   type="text"
                   onChange={changeEventHandler}
-                  name="phone"
+                  name="phoneNumber"
                   value={input.phoneNumber}
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 gap-2">
-                <Label htmlFor="bio" className="text-right">
-                  Bio
-                </Label>
-                <Input
-                  id="bio"
-                  type="text"
-                  onChange={changeEventHandler}
-                  name="bio"
-                  value={input.bio}
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 gap-2">
-                <Label htmlFor="skills" className="text-right">
-                  Skills
-                </Label>
-                <Input
-                  id="skills"
-                  type="text"
-                  onChange={changeEventHandler}
-                  name="skills"
-                  value={input.skills}
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 gap-2">
-                <Label htmlFor="file" className="text-right">
-                  Resume
-                </Label>
-                <Input
-                  id="file"
-                  onChange={changeFileHandler}
-                  name="file"
-                  type="file"
-                  accept="application/pdf"
                   className="col-span-3"
                 />
               </div>

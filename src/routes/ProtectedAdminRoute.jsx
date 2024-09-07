@@ -9,7 +9,7 @@ const ProtectedAdminRoute = ({ children }) => {
   const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
-    if (user === null || user?.role !== "recruiter") {
+    if (user === null || user?.role !== "Admin") {
       navigate("/");
     }
   }, []);

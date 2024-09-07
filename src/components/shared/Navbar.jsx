@@ -39,7 +39,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            {user && user?.role === "admin" ? (
+            {user && user?.role === "Admin" ? (
               <>
                 <li>
                   <Link to="/admin/dashboard"> Dashboard</Link>
@@ -47,6 +47,9 @@ const Navbar = () => {
                 <li>
                   <Link to="/admin/flights">Flights</Link>
                 </li>
+                {/* <li>
+                  <Link to="/admin/bookings">Bookings</Link>
+                </li> */}
               </>
             ) : (
               <>
@@ -54,11 +57,11 @@ const Navbar = () => {
                   <Link to="/"> Home</Link>
                 </li>
                 <li>
-                  <Link to="/admin/flights">Flights</Link>
+                  <Link to="/flights">Flights</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/browse">Browse</Link>
-                </li>
+                </li> */}
               </>
             )}
           </ul>
@@ -100,7 +103,7 @@ const Navbar = () => {
                   </div>
 
                   <div className="flex flex-col my-2 text-gray-600">
-                    {user && user?.role === "user" && (
+                    {user && user?.role === "User" && (
                       <div className="flex w-fit items-center gap-2 cursor-pointer">
                         <User2 />
                         <Button variant="link">

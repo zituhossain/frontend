@@ -37,7 +37,7 @@ const Browse = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto mt-5">
+      <div className="max-w-7xl mx-auto mt-20">
         {filterFlights.length <= 0 ? (
           <span>No flights found</span>
         ) : (

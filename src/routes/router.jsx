@@ -1,20 +1,16 @@
+import FlightDetails from "@/components/FlightDetails";
+import Flights from "@/components/Flights";
+import AdminBookings from "@/components/admin/AdminBookings";
+import AdminFlights from "@/components/admin/AdminFlights";
+import PostAdminFlight from "@/components/admin/PostAdminFlight";
 import { createBrowserRouter } from "react-router-dom";
+import Browse from "../components/Browse";
 import Home from "../components/Home";
+import Profile from "../components/Profile";
 import Login from "../components/auth/Login";
 import SignUp from "../components/auth/SignUp";
-import Jobs from "../components/Jobs";
-import Browse from "../components/Browse";
-import Profile from "../components/Profile";
-import JobDescription from "../components/JobDescription";
-import ProtectedRoute from "./ProtectedRoute";
-import Companies from "@/components/admin/Companies";
-import CompanyCreate from "@/components/admin/CompanyCreate";
-import CompanySetup from "@/components/admin/CompanySetup";
-import AdminJobs from "@/components/admin/AdminJobs";
-import PostAdminJob from "@/components/admin/PostAdminJob";
-import Applicants from "@/components/admin/Applicants";
 import ProtectedAdminRoute from "./ProtectedAdminRoute";
-import FlightDetails from "@/components/FlightDetails";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -29,14 +25,7 @@ export const router = createBrowserRouter([
     path: "signup",
     element: <SignUp />,
   },
-  {
-    path: "jobs",
-    element: <Jobs />,
-  },
-  {
-    path: "description/:id",
-    element: <JobDescription />,
-  },
+
   {
     path: "details/:id",
     element: <FlightDetails />,
@@ -44,6 +33,10 @@ export const router = createBrowserRouter([
   {
     path: "browse",
     element: <Browse />,
+  },
+  {
+    path: "flights",
+    element: <Flights />,
   },
   {
     path: "profile",
@@ -55,51 +48,36 @@ export const router = createBrowserRouter([
   },
 
   // Admin Routes
+
   {
-    path: "admin/companies",
+    path: "admin/bookings",
     element: (
       <ProtectedAdminRoute>
-        <Companies />
+        <AdminBookings />
       </ProtectedAdminRoute>
     ),
   },
   {
-    path: "admin/companies/create",
+    path: "admin/flights",
     element: (
       <ProtectedAdminRoute>
-        <CompanyCreate />
+        <AdminFlights />
       </ProtectedAdminRoute>
     ),
   },
   {
-    path: "admin/companies/:id",
+    path: "admin/flights/create",
     element: (
       <ProtectedAdminRoute>
-        <CompanySetup />
+        <PostAdminFlight />
       </ProtectedAdminRoute>
     ),
   },
   {
-    path: "admin/jobs",
+    path: "admin/flights/edit/:flightId",
     element: (
       <ProtectedAdminRoute>
-        <AdminJobs />
-      </ProtectedAdminRoute>
-    ),
-  },
-  {
-    path: "admin/jobs/create",
-    element: (
-      <ProtectedAdminRoute>
-        <PostAdminJob />
-      </ProtectedAdminRoute>
-    ),
-  },
-  {
-    path: "admin/jobs/:id/applicants",
-    element: (
-      <ProtectedAdminRoute>
-        <Applicants />
+        <PostAdminFlight />
       </ProtectedAdminRoute>
     ),
   },

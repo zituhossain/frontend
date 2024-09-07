@@ -11,7 +11,7 @@ import {
 } from "./ui/table";
 
 const AppliedJobTable = () => {
-  const { allAppliedJobs } = useSelector((store) => store.job);
+  const { allAppliedBookings } = useSelector((store) => store.bookings);
   return (
     <div>
       <Table>
@@ -19,33 +19,37 @@ const AppliedJobTable = () => {
         <TableHeader>
           <TableRow>
             <TableHead>Date</TableHead>
-            <TableHead>Job Role</TableHead>
-            <TableHead>Company</TableHead>
+            <TableHead>Flight No.</TableHead>
+            <TableHead>Airline</TableHead>
+            <TableHead>Departure</TableHead>
+            <TableHead>Destination</TableHead>
+            <TableHead>Price</TableHead>
             <TableHead className="text-right">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {allAppliedJobs.length <= 0 ? (
-            <span>You have not applied any job yet.</span>
+          {allAppliedBookings.length <= 0 ? (
+            <span>You have not booked any flight yet.</span>
           ) : (
-            allAppliedJobs.map((appliedJob) => (
-              <TableRow key={appliedJob._id}>
-                <TableCell>
-                  {appliedJob?.job?.createdAt.split("T")[0]}
-                </TableCell>
-                <TableCell>{appliedJob.job?.title}</TableCell>
-                <TableCell>{appliedJob.job?.company?.name}</TableCell>
+            allAppliedBookings.map((booked) => (
+              <TableRow key={booked._id}>
+                <TableCell>{booked?.flightId?.date.split("T")[0]}</TableCell>
+                <TableCell>{booked.flightId?.flightNumber}</TableCell>
+                <TableCell>{booked.flightId?.airline}</TableCell>
+                <TableCell>{booked.flightId?.origin}</TableCell>
+                <TableCell>{booked.flightId?.destination}</TableCell>
+                <TableCell>{booked.flightId?.price}</TableCell>
                 <TableCell className="text-right">
                   <Badge
                     className={`${
-                      appliedJob?.status === "rejected"
+                      booked?.bookingStatus === "cancelled"
                         ? "bg-red-400"
-                        : appliedJob.status === "pending"
+                        : booked.bookingStatus === "pending"
                         ? "bg-gray-400"
                         : "bg-green-400"
                     }`}
                   >
-                    {appliedJob.status.toUpperCase()}
+                    {booked?.bookingStatus.toUpperCase()}
                   </Badge>
                 </TableCell>
               </TableRow>
