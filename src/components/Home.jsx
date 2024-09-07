@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import CategoryCarousel from "./CategoryCarousel";
 import HeroSection from "./HeroSection";
-import LatestJobs from "./LatestJobs";
+import LatestFlights from "./LatestFlights";
 import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
 
@@ -21,8 +20,7 @@ const Home = () => {
     <>
       <Navbar />
       <HeroSection />
-      <CategoryCarousel />
-      <LatestJobs />
+      <LatestFlights />
       <Footer />
     </>
   );

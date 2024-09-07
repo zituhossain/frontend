@@ -35,6 +35,8 @@ const AdminBookingsTable = () => {
     setFilteredBookings(filteredBookings);
   }, [allAdminBookings, searchBookingByText]);
 
+  const options = { day: "2-digit", month: "short", year: "numeric" };
+
   return (
     <div>
       <Table>
@@ -45,6 +47,7 @@ const AdminBookingsTable = () => {
             <TableHead>Airline</TableHead>
             <TableHead>Departure</TableHead>
             <TableHead>Destination</TableHead>
+            <TableHead>Class</TableHead>
             <TableHead>Seats</TableHead>
             <TableHead>Total Price</TableHead>
             <TableHead>Status</TableHead>
@@ -70,6 +73,7 @@ const AdminBookingsTable = () => {
                 <TableCell>{booking?.flightId?.airline}</TableCell>
                 <TableCell>{booking?.flightId?.origin}</TableCell>
                 <TableCell>{booking?.flightId?.destination}</TableCell>
+                <TableCell>{booking?.seatClass}</TableCell>
                 <TableCell>{booking?.numberOfSeats}</TableCell>
                 <TableCell>{booking?.totalPrice}</TableCell>
                 <TableCell>
@@ -86,7 +90,12 @@ const AdminBookingsTable = () => {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <p>{new Date(booking?.travelDate).toLocaleDateString()}</p>
+                  <p>
+                    {new Date(booking?.flightId?.date).toLocaleDateString(
+                      "en-GB",
+                      options
+                    )}
+                  </p>
                   <p>{booking?.flightId?.time}</p>
                 </TableCell>
               </TableRow>

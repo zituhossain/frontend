@@ -2,7 +2,7 @@ import useGetAppliedBookings from "@/hooks/useGetAppliedBookings";
 import { Contact, Mail, Pen } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import AppliedJobTable from "./AppliedJobTable";
+import BookedFlightTable from "./BookedFlightTable";
 import Navbar from "./shared/Navbar";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -46,7 +46,7 @@ const Profile = () => {
       </div>
       <div className="max-w-4xl mx-auto bg-white rounded-2xl">
         <h1 className="font-bold text-lg p-3">Booked Flights</h1>
-        <AppliedJobTable />
+        <BookedFlightTable />
       </div>
 
       <UpdateProfileDialog open={open} setOpen={setOpen} />

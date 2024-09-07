@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "./ui/table";
 
-const AppliedJobTable = () => {
+const BookedFlightTable = () => {
   const { allAppliedBookings } = useSelector((store) => store.bookings);
   return (
     <div>
@@ -23,7 +23,9 @@ const AppliedJobTable = () => {
             <TableHead>Airline</TableHead>
             <TableHead>Departure</TableHead>
             <TableHead>Destination</TableHead>
-            <TableHead>Price</TableHead>
+            <TableHead>Class</TableHead>
+            <TableHead>Seats</TableHead>
+            <TableHead>Total Price</TableHead>
             <TableHead className="text-right">Status</TableHead>
           </TableRow>
         </TableHeader>
@@ -38,7 +40,9 @@ const AppliedJobTable = () => {
                 <TableCell>{booked.flightId?.airline}</TableCell>
                 <TableCell>{booked.flightId?.origin}</TableCell>
                 <TableCell>{booked.flightId?.destination}</TableCell>
-                <TableCell>{booked.flightId?.price}</TableCell>
+                <TableCell>{booked?.seatClass}</TableCell>
+                <TableCell>{booked?.numberOfSeats}</TableCell>
+                <TableCell>{booked?.totalPrice}</TableCell>
                 <TableCell className="text-right">
                   <Badge
                     className={`${
@@ -61,4 +65,4 @@ const AppliedJobTable = () => {
   );
 };
 
-export default AppliedJobTable;
+export default BookedFlightTable;

@@ -3,7 +3,7 @@ import { BOOKING_API_END_POINT, FLIGHT_API_END_POINT } from "@/utils/constant";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -22,12 +22,13 @@ const FlightDetails = () => {
   const { singleFlight } = useSelector((store) => store.flight);
   const { token } = useSelector((store) => store.auth);
   const [numberOfSeats, setNumberOfSeats] = useState(1);
-  const [travelDate, setTravelDate] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
+  const [seatClass, setSeatClass] = useState("Economy");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const params = useParams();
   const flightId = params.id;
   const formatdate = new Date(singleFlight?.date).toLocaleDateString();
@@ -59,7 +60,7 @@ const FlightDetails = () => {
         {
           flightId,
           numberOfSeats,
-          travelDate,
+          seatClass,
         },
         {
           withCredentials: true,
@@ -73,6 +74,7 @@ const FlightDetails = () => {
         setOpenPopup(false);
         // Mark the booking as confirmed
         setIsBookingConfirmed(true);
+        navigate("/profile");
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -119,15 +121,40 @@ const FlightDetails = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                 />
               </div>
+
+              {/* Seat Class Selection */}
               <div className="my-4">
-                <label className="block text-gray-700">Travel Date</label>
-                <input
-                  type="date"
-                  value={travelDate}
-                  onChange={(e) => setTravelDate(e.target.value)}
+                <label className="block text-gray-700">Seat Class</label>
+                <select
+                  value={seatClass}
+                  onChange={(e) => setSeatClass(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                />
+                >
+                  <option value="Economy">Economy</option>
+                  <option value="Business">Business</option>
+                  <option value="First Class">First Class</option>
+                </select>
               </div>
+
+              {/* Total Price Display */}
+              <div className="my-4">
+                <h1 className="font-bold text-gray-800">
+                  Total Price:{" "}
+                  <span className="text-blue-600">
+                    {(
+                      singleFlight?.price *
+                      numberOfSeats *
+                      (seatClass === "Business"
+                        ? 1.5
+                        : seatClass === "First Class"
+                        ? 2
+                        : 1)
+                    ).toFixed(2)}{" "}
+                    BDT
+                  </span>
+                </h1>
+              </div>
+
               <DialogFooter>
                 <Button
                   onClick={bookFlightHandler}

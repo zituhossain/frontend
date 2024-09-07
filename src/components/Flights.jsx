@@ -10,7 +10,7 @@ import Pagination from "./shared/Pagination";
 
 const Flights = () => {
   // useGetAllAdminFlights();
-  const [page, setPage] = useState(1); // State to track current page
+  const [page, setPage] = useState(1);
   const limit = 2; // Number of flights per page
   const { totalPages, currentPage, setCurrentPage } = useGetAllAdminFlights(
     page,
@@ -21,6 +21,7 @@ const Flights = () => {
   const { allAdminFlights, searchedQuery } = useSelector(
     (store) => store.flight
   );
+  console.log(allAdminFlights);
   const [filterFlights, setFilterFlights] = useState([]);
 
   useEffect(() => {
