@@ -13,8 +13,14 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   const searchFlightHandler = () => {
-    dispatch(setSearchedQuery({ origin, destination, date }));
-    navigate("/browse"); // Navigate to Browse page after search
+    dispatch(
+      setSearchedQuery({
+        origin: origin || "",
+        destination: destination || "",
+        date: date || "",
+      })
+    );
+    navigate("/browse");
   };
 
   return (

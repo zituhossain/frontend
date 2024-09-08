@@ -77,7 +77,8 @@ const FlightDetails = () => {
         navigate("/profile");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
+      toast.error("Login first to book a flight");
     } finally {
       setIsSubmitting(false);
     }

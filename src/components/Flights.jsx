@@ -21,7 +21,7 @@ const Flights = () => {
   const { allAdminFlights, searchedQuery } = useSelector(
     (store) => store.flight
   );
-  console.log(allAdminFlights);
+
   const [filterFlights, setFilterFlights] = useState([]);
 
   useEffect(() => {
@@ -31,6 +31,8 @@ const Flights = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (!allAdminFlights || !searchedQuery || !searchedQuery.priceRange) return;
+
     const { selectedAirlines, priceRange } = searchedQuery;
 
     const filteredFlight =
@@ -44,7 +46,9 @@ const Flights = () => {
                 );
 
           const matchPrice =
-            flight?.price >= priceRange[0] && flight?.price <= priceRange[1];
+            priceRange &&
+            flight?.price >= priceRange[0] &&
+            flight?.price <= priceRange[1];
 
           return matchAirline && matchPrice;
         })) ||

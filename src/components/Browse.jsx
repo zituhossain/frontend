@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import Flight from "./Flight"; // Assuming you have a Flight component similar to Job
+import Flight from "./Flight";
 import Navbar from "./shared/Navbar";
 import { useEffect, useState } from "react";
 import { setSearchedQuery } from "@/redux/flightSlice";
-import useGetAllFlights from "@/hooks/useGetAllFlights"; // Fetch flights based on query
+import useGetAllFlights from "@/hooks/useGetAllFlights";
 
 const Browse = () => {
   useGetAllFlights();
@@ -20,14 +20,25 @@ const Browse = () => {
       allFlights?.length > 0
         ? allFlights.filter((flight) => {
             if (!searchedQuery) return true;
-            return (
-              flight?.origin
-                ?.toLowerCase()
-                .includes(searchedQuery.origin.toLowerCase()) &&
-              flight?.destination
-                ?.toLowerCase()
-                .includes(searchedQuery.destination.toLowerCase())
-            );
+
+            const matchOrigin = searchedQuery.origin
+              ? flight?.origin
+                  ?.toLowerCase()
+                  .includes(searchedQuery.origin.toLowerCase())
+              : true;
+
+            const matchDestination = searchedQuery.destination
+              ? flight?.destination
+                  ?.toLowerCase()
+                  .includes(searchedQuery.destination.toLowerCase())
+              : true;
+
+            const matchDate = searchedQuery.date
+              ? new Date(flight.date).toDateString() ===
+                new Date(searchedQuery.date).toDateString()
+              : true;
+
+            return matchOrigin && matchDestination && matchDate;
           })
         : [];
 
