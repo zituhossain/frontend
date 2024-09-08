@@ -29,11 +29,11 @@ const HeroSection = () => {
         <span className="mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#f83002] font-medium">
           Find Your Perfect Flight
         </span>
-        <h1 className="text-5xl font-bold">
+        <h1 className="sm:text-3xl lg:text-4xl font-bold">
           Book Your <br /> Flight with{" "}
           <span className="text-[#6a38c2]">MyTrip</span>
         </h1>
-        <div className="flex flex-col items-center mx-auto shadow-lg border border-gray-200 rounded-lg gap-4 p-6 w-[40%]">
+        <div className="flex flex-col items-center mx-auto shadow-lg border border-gray-200 rounded-lg gap-4 p-6 sm:w-[80%] lg:w-[40%]">
           <input
             type="text"
             placeholder="Enter Origin"

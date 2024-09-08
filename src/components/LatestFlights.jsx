@@ -7,10 +7,10 @@ const LatestFlights = () => {
   const { allAdminFlights } = useSelector((store) => store.flight);
   return (
     <div className="max-w-7xl mx-auto my-20">
-      <h1 className="text-4xl font-bold">
-        <span className="text-[#6a38c2]">Top</span> Flights
+      <h1 className="sm:text-lg lg:text-4xl font-bold text-center">
+        <span className="text-[#6a38c2] ">Top</span> Flights
       </h1>
-      <div className="grid grid-cols-3 gap-4 my-5">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
         {allAdminFlights.length <= 0 ? (
           <span>No Flight Available</span>
         ) : (

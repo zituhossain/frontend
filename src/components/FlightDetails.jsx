@@ -87,8 +87,8 @@ const FlightDetails = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-7xl mx-auto my-10">
-        <div className="flex items-center justify-between">
+      <div className="sm: max-w-max md:max-w-max lg:max-w-7xl mx-auto my-10">
+        <div className="flex sm:flex flex-col md:flex-row lg:flex-row items-center justify-between gap-4">
           <div>
             <h1 className="font-bold text-xl">{singleFlight?.title}</h1>
             <div className="flex gap-2 items-center mt-4">

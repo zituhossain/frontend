@@ -49,7 +49,7 @@ const FilterCard = () => {
 
       {/* Airline Filter */}
       {filterData.map((data, index) => (
-        <div key={index}>
+        <div key={index} className="flex flex-col">
           <h1 className="font-bold text-lg">{data?.filterType}</h1>
           {data?.filterValue?.map((value, idx) => {
             const itemId = `id${index}-${idx}`;
