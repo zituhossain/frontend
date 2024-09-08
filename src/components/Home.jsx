@@ -14,7 +14,7 @@ const Home = () => {
     if (user?.role === "Admin") {
       navigate("/admin/flights");
     }
-  }, []);
+  }, [navigate, user?.role]);
 
   return (
     <>
